@@ -30,9 +30,9 @@ export const Create_Post_Handler = async(event) => {
     }
     let category1 = [category]
     const NewPost = {
-        Title: title,
-        Content: content,
-        Category: category1
+        title: title,
+        description: content,
+        category: category1
     }
     const response = await fetch('http://localhost:8080/api/v1/post/create', {
         method: 'POST',
