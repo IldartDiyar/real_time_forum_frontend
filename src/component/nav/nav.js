@@ -1,6 +1,4 @@
-export default function renderNav(routes, appDiv, usrObj) {
-    const navContainer = document.createElement("div");
-    navContainer.classList.add("navigation");
+export default function renderNav(routes, navContainer, usrObj) {
     routes.forEach(route => {
         if (!route.show) {
             return
@@ -10,12 +8,4 @@ export default function renderNav(routes, appDiv, usrObj) {
         link.textContent = route.pathName;
         navContainer.appendChild(link);
     });
-    if (usrObj) {
-        const link = document.createElement("a");
-        link.href = "/profile";
-        link.textContent = usrObj;
-        navContainer.appendChild(link);
-
-    }
-    appDiv.appendChild(navContainer);
 }
