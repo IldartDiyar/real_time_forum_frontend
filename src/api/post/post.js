@@ -34,7 +34,7 @@ export const Create_Post_Handler = async(event) => {
         description: content,
         category: category1
     }
-    const response = await fetch('http://localhost:8080/api/v1/post/create', {
+    const response = await fetch(`${baseURL}/post/create`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -47,6 +47,24 @@ export const Create_Post_Handler = async(event) => {
         return
     } else {
         const errorMessage = await response.text();
-        alert(`Registration failed: ${errorMessage}`);
+        alert(`
+                Registration failed: $ { errorMessage }
+                `);
+    }
+}
+
+export const Get_Posts = async() => {
+    const response = await fetch(`${baseURL}/post`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+    });
+    if (response.ok) {
+        const data = await response.json();
+        return data
+    } else {
+        const errorMessage = await response.text();
+        throw errorMessage
     }
 }

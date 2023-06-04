@@ -74,3 +74,25 @@ export const Sign_In_Handler = async(event) => {
 
     }
 }
+
+export const Log_out = async() => {
+    const response = await fetch(`${baseURL}/log-out`, {
+        headers: {
+            'Accept': 'text/plain',
+            'Content-type': 'text/plain',
+            'Credentials': 'include'
+        },
+        credentials: 'include',
+        method: 'POST',
+    });
+
+    if (response.ok) {
+        console.log(response);
+        window.location.href = '/sign_in';
+        return
+    } else {
+        const errorMessage = await response.text();
+        alert(`Error: ${errorMessage}`)
+
+    }
+}

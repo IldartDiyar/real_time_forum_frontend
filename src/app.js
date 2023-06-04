@@ -3,7 +3,7 @@ import Home from "./component/page/home/home.js"
 import Sign_In from "./component/page/sign_in/sign_in.js"
 import Sign_Up from "./component/page/sign_up/sign_up.js"
 import Create_Post from "./component/page/create_post/create_post.js";
-import Logout from "./component/Log_out.js";
+import { Log_out } from "./api/Authorization/auth.js";
 import { check_auth } from "./api/Authorization/check_user.js"
 
 const appDiv = document.getElementById("app");
@@ -24,8 +24,10 @@ const router = async() => {
         { path: "/sign_in", pathName: "Sign in", show: usrObj === null, view: Sign_In },
         { path: "/sign_up", pathName: "Sign up", show: usrObj === null, view: Sign_Up },
         { path: "/create_post", pathName: "Create post", show: usrObj !== null, view: Create_Post },
-        { path: "/logout", pathName: "Log out", show: usrObj !== null, view: Logout },
-        { path: "/profile", pathName: usrObj, show: usrObj !== null, view: Logout }
+        { path: "/logout", pathName: "Log out", show: usrObj !== null, view: Log_out },
+        { path: "/profile", pathName: usrObj, show: usrObj !== null, view: Log_out },
+
+
     ];
     renderNav(routes, navigation, usrObj)
     const defaultRoute = usrObj === null ? routes[1] : null;
