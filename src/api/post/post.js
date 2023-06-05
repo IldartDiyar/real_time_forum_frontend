@@ -34,27 +34,48 @@ export const Create_Post_Handler = async(event) => {
         description: content,
         category: category1
     }
-    const response = await fetch(`${baseURL}/post/create`, {
+    console.log(NewPost);
+    const response = await fetch(`http://localhost:8080/api/v1/post/create`, {
+        headers: {
+            'Accept': 'text/plain',
+            'Content-type': 'text/plain',
+            'Credentials': 'include'
+        },
+        credentials: 'include',
         method: 'POST',
-        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify(NewPost),
     });
-
+    const answer = await response.json();
+    console.log(answer);
     if (response.ok) {
         window.location.href = '/';
         return
     } else {
         const errorMessage = await response.text();
-        alert(`
-                Registration failed: $ { errorMessage }
-                `);
+        console.log(errorMessage);
+        alert(`Registration failed: ${errorMessage}`);
     }
 }
 
 export const Get_Posts = async() => {
     const response = await fetch(`${baseURL}/post`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+    });
+    if (response.ok) {
+        const data = await response.json();
+        return data
+    } else {
+        const errorMessage = await response.text();
+        throw errorMessage
+    }
+}
+
+export const Get_Post = async(id) => {
+    const response = await fetch(`${baseURL}/post/${id}`, {
         method: 'GET',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

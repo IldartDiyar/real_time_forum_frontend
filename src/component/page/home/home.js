@@ -19,7 +19,7 @@ export default async function Home(appDiv) {
         const postCard = document.createElement("div");
         postCard.classList.add("post-card");
         postCard.innerHTML = `
-      <a class="post-title" href="post?=${post.ID}">
+      <a class="post-title" href="/post/${post.ID}">
         <h2 class="title">${post.title}</h2>
       </a>
       <div class="post-details">
