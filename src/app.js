@@ -6,8 +6,8 @@ import Create_Post from "./component/page/create_post/create_post.js";
 import { Log_out } from "./api/Authorization/auth.js";
 import { check_auth } from "./api/Authorization/check_user.js"
 import Post_page from "./component/page/post/post.js"
-
-const socket = new WebSocket('ws://localhost:8080/api/v1/web-socket');
+import Chat_Page from "./component/page/chat/chat.js"
+import { ws } from "./ws/ws.js"
 
 
 const appDiv = document.getElementById("app");
@@ -15,7 +15,6 @@ const navigation = document.getElementById("navigation");
 
 var usrObj = null;
 const router = async() => {
-
     try {
         usrObj = await check_auth();
     } catch (error) {
@@ -23,7 +22,6 @@ const router = async() => {
         appDiv.innerHTML = "<h1>Error: " + error.message + "</h1>";
         return;
     }
-
     console.log(usrObj);
 
     const routes = [
@@ -33,6 +31,7 @@ const router = async() => {
         { path: "/create_post", pathName: "Create post", show: usrObj !== null, view: Create_Post },
         { path: "/logout", pathName: "Log out", show: usrObj !== null, view: Log_out },
         { path: "/profile", pathName: usrObj, show: usrObj !== null, view: Log_out },
+        { path: "/chat", pathName: "Chat", show: usrObj !== null, view: Chat_Page },
         { path: "/post/", pathName: "Post", show: false, view: Post_page }, // Dynamic route
     ];
 
@@ -49,11 +48,10 @@ const router = async() => {
         }
         return false;
     }) || defaultRoute;
-    socket.send("asd")
     if (!matchingRoute) {
         appDiv.innerHTML = "<h1>Page not found</h1>";
     } else {
-        matchingRoute.view(appDiv);
+        matchingRoute.view(appDiv, usrObj);
     }
 
 };
@@ -71,3 +69,20 @@ document.addEventListener("DOMContentLoaded", async() => {
     });
     router()
 });
+
+// wsSocket.addEventListener('open', () => {
+//     console.log('WebSocket connection established');
+// });
+
+// wsSocket.addEventListener('message', (event) => {
+//     console.log('Received message:', event.data);
+//     // Process the received message here
+// });
+
+// wsSocket.addEventListener('close', () => {
+//     console.log('WebSocket connection closed');
+// });
+
+// wsSocket.addEventListener('error', (error) => {
+//     console.error('WebSocket error:', error);
+// });
