@@ -1,6 +1,7 @@
 import { Get_User } from "../../../api/chat/chat.js"
 
-export default async function Chat_Page(appDiv, usrObj) {
+export default async function Chat_Page(appDiv, usrObj, socket) {
+
     let users = null;
     try {
         users = await Get_User()
@@ -8,6 +9,9 @@ export default async function Chat_Page(appDiv, usrObj) {
         console.log(error);
         appDiv.innerHTML = "<h1>Error: " + error.message + "</h1>";
         return
+    }
+    if (!users) {
+        appDiv.innerHTML = "<h1>Sorry, you are alone user in our service</h1>";
     }
     appDiv.innerHTML = ``;
     const divPage = document.createElement("div");
@@ -154,7 +158,23 @@ export default async function Chat_Page(appDiv, usrObj) {
         border: none;
         cursor: pointer;
     }`;
-
+    const sendButton = divPage.querySelector("#send-button");
+    const messageInput = divPage.querySelector("#message-input");
+    sendButton.addEventListener("click", () => {
+        const message = messageInput.value;
+        if (!message) {
+            alert("can`t send empty message")
+            return
+        }
+        const messageStr = {
+            from_user_id: usrObj.id,
+            to_user_id: InChat.id,
+            text: message,
+        };
+        console.log(messageStr);
+        socket.send(JSON.stringify(messageStr));
+        messageInput.value = "";
+    });
     document.head.appendChild(style);
     appDiv.appendChild(divPage);
 }

@@ -1,6 +1,7 @@
 import { baseURL } from "../api.js";
 
 
+
 export const Get_User = async() => {
     const response = await fetch(`${baseURL}/users`, {
         headers: {
@@ -16,5 +17,6 @@ export const Get_User = async() => {
         throw error;
     }
     const users = await response.json();
-    return users["token"];
+    console.log(typeof users);
+    return users["user"];
 }

@@ -9,6 +9,7 @@ import Post_page from "./component/page/post/post.js"
 import Chat_Page from "./component/page/chat/chat.js"
 import { ws } from "./ws/ws.js"
 
+const socket = ws();
 
 const appDiv = document.getElementById("app");
 const navigation = document.getElementById("navigation");
@@ -29,7 +30,7 @@ const router = async() => {
         { path: "/sign_up", pathName: "Sign up", show: usrObj === null, view: Sign_Up },
         { path: "/create_post", pathName: "Create post", show: usrObj !== null, view: Create_Post },
         { path: "/logout", pathName: "Log out", show: usrObj !== null, view: Log_out },
-        { path: "/profile", pathName: usrObj, show: usrObj !== null, view: Log_out },
+        { path: "/profile", pathName: "username", show: usrObj !== null, view: Log_out },
         { path: "/chat", pathName: "Chat", show: usrObj !== null, view: Chat_Page },
         { path: "/post/", pathName: "Post", show: false, view: Post_page }, // Dynamic route
     ];
@@ -50,10 +51,14 @@ const router = async() => {
     if (!matchingRoute) {
         appDiv.innerHTML = "<h1>Page not found</h1>";
     } else {
-        matchingRoute.view(appDiv, usrObj);
+        matchingRoute.view(appDiv, usrObj, socket);
     }
 
 };
+
+socket.addEventListener("open", () => {
+    console.log("WebSocket connection established.");
+});
 
 window.addEventListener("popstate", router);
 
@@ -68,20 +73,3 @@ document.addEventListener("DOMContentLoaded", async() => {
     });
     router()
 });
-
-// wsSocket.addEventListener('open', () => {
-//     console.log('WebSocket connection established');
-// });
-
-// wsSocket.addEventListener('message', (event) => {
-//     console.log('Received message:', event.data);
-//     // Process the received message here
-// });
-
-// wsSocket.addEventListener('close', () => {
-//     console.log('WebSocket connection closed');
-// });
-
-// wsSocket.addEventListener('error', (error) => {
-//     console.error('WebSocket error:', error);
-// });
