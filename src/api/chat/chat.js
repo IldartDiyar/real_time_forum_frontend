@@ -16,5 +16,5 @@ export const Get_User = async() => {
         throw error;
     }
     const users = await response.json();
-    return users;
+    return users["token"];
 }

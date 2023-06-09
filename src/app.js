@@ -22,7 +22,6 @@ const router = async() => {
         appDiv.innerHTML = "<h1>Error: " + error.message + "</h1>";
         return;
     }
-    console.log(usrObj);
 
     const routes = [
         { path: "/", pathName: "Home", show: usrObj !== null, view: Home },
