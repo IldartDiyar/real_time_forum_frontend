@@ -7,7 +7,8 @@ export default async function Chat_Page(appDiv, usrObj, socket) {
     socket.onmessage = (event) => {
         const data = JSON.parse(event.data)
 
-        console.log(data);
+        console.log(data.body);
+        users = data.body
 
     };
 

@@ -73,3 +73,6 @@ document.addEventListener("DOMContentLoaded", async() => {
     });
     router()
 });
+socket.onopen = function() {
+    socket.send(JSON.stringify({ type: "token", body: "Hello" }))
+}
