@@ -11,10 +11,11 @@ func main() {
 	})
 
 	http.HandleFunc("/src/", func(w http.ResponseWriter, r *http.Request) {
+		filePath := r.URL.Path[1:]
 		w.Header().Set("Cache-Control", "max-age=0")
 		w.Header().Set("Content-Type", "application/javascript")
 
-		http.ServeFile(w, r, r.URL.Path[1:])
+		http.ServeFile(w, r, filePath)
 	})
 
 	log.Print("Server listening on port :4000...\n")

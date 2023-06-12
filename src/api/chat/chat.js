@@ -17,6 +17,6 @@ export const Get_User = async() => {
         throw error;
     }
     const users = await response.json();
-    console.log(typeof users);
+
     return users["user"];
 }
