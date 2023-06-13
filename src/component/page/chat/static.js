@@ -149,7 +149,7 @@ export function getStyle() {
     }
     `
 }
-export function render_User(divPage, InChat, users) {
+export function handle_User(divPage, InChat, users) {
     const userItems = divPage.querySelectorAll('.user-list li');
     userItems.forEach((userItem) => {
         userItem.addEventListener('click', () => {

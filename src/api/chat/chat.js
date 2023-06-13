@@ -18,5 +18,5 @@ export const Get_User = async() => {
     }
     const users = await response.json();
 
-    return users["user"];
+    return users;
 }

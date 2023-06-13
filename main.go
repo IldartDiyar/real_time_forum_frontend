@@ -12,9 +12,9 @@ func main() {
 
 	http.HandleFunc("/src/", func(w http.ResponseWriter, r *http.Request) {
 		filePath := r.URL.Path[1:]
-		w.Header().Set("Cache-Control", "max-age=0")
-		w.Header().Set("Content-Type", "application/javascript")
 
+		w.Header().Set("Content-Type", "application/javascript")
+		w.Header().Set("Cache-Control", "max-age=0")
 		http.ServeFile(w, r, filePath)
 	})
 
